@@ -14,8 +14,9 @@ Ready? Let’s go! 🚀
 1. [Testing BO Changes from a PR](#testing-bo-changes-from-a-pr)
 2. [Testing the SDK PR with a specific hash](#testing-the-sdk-pr-with-a-specific-hash)
 3. [Running the Widget SDK Locally](#running-the-widget-sdk-locally)
-4. [Checking `axeptioSDK.settings` in the Browser Console](#checking-axeptiosdk.settings-in-the-browser-console)
+4. [Checking `axeptioSDK.settings` in the Browser Console](#checking-axeptiosdksettings-in-the-browser-console)
 5. [Android Sample App](#android-sample-app)
+6. [Testing Custom SDK Versions via URL Hash](#testing-custom-sdk-versions-via-url-hash)
 
 <br> 
 
@@ -38,11 +39,7 @@ Once the fix or feature has been validated in this preview environment:
 To test the SDK version from a specific PR, use the hash-based version of the SDK instead of the default production one.
 
 ### ✅ Options to Use the SDK with the PR Hash
-- Client-Side App
-  Use the SDK by appending the PR hash to the SDK URL directly in your integration:
-  ```arduino
-  https://static.axept.io/sdk-pr-0e97ef9a-66e0-568e-b740-8cc7f62d8ed8.js
-  ```
+To test the SDK please add the following hash to any client URL: #axeptio_pr_0e97ef9a-66e0-568e-b740-8cc7f62d8ed8
 
 - Local HTML File (Static)
   You can test locally by referencing the desired SDK directly via the full PR URL:
@@ -83,7 +80,7 @@ For deeper testing or debugging, it’s possible to run the widget SDK locally o
 
 <br> 
 
-# Checking `axeptioSDK.settings` in the Browser Console
+# Checking axeptioSDK.settings in the Browser Console
 
 You can access `axeptioSDK.settings` directly from your browser’s developer console to inspect the current SDK configuration.
 
@@ -125,7 +122,7 @@ Below are some of the parameters returned in the console output:
 
 <br> 
 
-# 📱 Android Sample App
+# 📱Android Sample App
 
 To run the Android sample app for testing the SDK, follow these steps:
 
@@ -138,3 +135,14 @@ To run the Android sample app for testing the SDK, follow these steps:
 
 > 🛠️ **Tip:** Make sure you're using the correct environment configuration (staging or production) when setting the `client_id` and `cookies_version`.
 
+<br>
+
+# Testing Custom SDK Versions via URL Hash
+To test the staging version of the Axeptio SDK on a live website without changing its source code, simply append the following hash to the URL:
+```bash
+#axeptio_next
+```
+Example:
+`https://www.convention.fr#axeptio_next`
+
+This will load the latest staging version of the SDK, allowing QA or developers to validate changes before release.
