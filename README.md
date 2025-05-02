@@ -17,6 +17,7 @@ Ready? Let’s go! 🚀
 4. [Checking `axeptioSDK.settings` in the Browser Console](#checking-axeptiosdk.settings-in-the-browser-console)
 5. [Android Sample App](#android-sample-app)
    - [Local Testing](#locaL-testing)
+6. [IOS Sample App](#ios-sample-app)
 
 <br> 
 
@@ -184,4 +185,60 @@ maven {
 ```
 
 > 🛠️ **Tip:** Make sure you're using the correct environment configuration (staging or production) when setting the `client_id` and `cookies_version`.
+
+<br> 
+
+# 📱IOS Sample App
+These are the steps to test changes in the iOS SDK using cookie configurations created in the production Back Office (BO).
+
+### To test a bug fix
+1. Clone the `axeptio-ios-sdk-sources` repository.
+2. Switch to the branch you want to test.
+3. Configure the widget (see the configuration section).
+
+### To test the version in production
+1. Clone the `axeptio-ios-sdk-sources` repository.
+2. Configure the widget (see the configuration section).
+3. Point to the SDK version you want to test (see below).
+
+#### Swift
+Update the following file:
+```bash
+sampleSwift/sampleSwift.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+```
+**Example**:
+```json
+{
+  "identity" : "axeptio-ios-sdk",
+  "kind" : "remoteSourceControl",
+  "location" : "https://github.com/axeptio/axeptio-ios-sdk",
+  "state" : {
+    "revision" : "9d02ecded880cb373ba9629162e561935f8aa8a5",
+    "version" : "2.0.2"
+  }
+}
+```
+#### Objective-C
+Update the following file:
+```csharp
+sampleObjectiveC/Podfile.lock
+```
+```makefile
+PODS:
+  - AxeptioIOSSDK (2.0.2)
+```
+
+### Configure widget in sample app
+To configure the widget in the sample app (public repo), add the Project ID and cookies version in `AppDelegate.swift`.
+Also, select the appropriate flavor: `.brands` or `.publisherTcf`.
+```swift
+static let targetService: AxeptioService = .brands
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        Axeptio.shared.initialize(targetService: AppDelegate.targetService, 
+        	clientId: "5fbfa806a0787d3985c6ee5f", cookiesVersion: "demo-brands")
+```
+<br>
 
