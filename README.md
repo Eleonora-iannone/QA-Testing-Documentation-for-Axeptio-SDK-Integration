@@ -16,6 +16,7 @@ Ready? Let’s go! 🚀
 3. [Running the Widget SDK Locally](#running-the-widget-sdk-locally)
 4. [Checking `axeptioSDK.settings` in the Browser Console](#checking-axeptiosdk.settings-in-the-browser-console)
 5. [Android Sample App](#android-sample-app)
+   - [Local Testing](#locaL-testing)
 
 <br> 
 
@@ -135,6 +136,52 @@ To run the Android sample app for testing the SDK, follow these steps:
 3. Open the file `build.gradle.kts` and update the following fields:
    - `client_id`
    - `cookies_version`
+
+## Local Testing
+
+### To test a bug fix
+1. Clone the `axeptio-android-sdk-sources` repository
+2. Switch to the branch you want to test.
+3. Configure the widget (see the configuration section below).
+
+### To test the version in production
+1. Clone the `axeptio-android-sdk-sources` repository
+2. Configure the widget (see configuration section).
+3. Update the SDK version in `build.gradle.kts`:
+```kotin
+implementation("io.axept.android:android-sdk:2.0.6")
+```
+### ⚙️ Widget Configuration in the Sample App
+In `build.gradle.kts`, add the project ID and the version name:
+```kotlin
+productFlavors {
+    create("publishers") {
+        dimension = "service"
+        buildConfigField("String", "AXEPTIO_CLIENT_ID", "\"67b63ac7d81d22bf09c09e52\"")
+        buildConfigField("String", "AXEPTIO_COOKIES_VERSION", "\"tcf-consent-mode\"")
+        buildConfigField("String", "AXEPTIO_TARGET_SERVICE", "\"publishers\"")
+    }
+    create("brands") {
+        dimension = "service"
+        buildConfigField("String", "AXEPTIO_CLIENT_ID", "\"67f3f816b336596c4a7c741c\"")
+        buildConfigField("String", "AXEPTIO_COOKIES_VERSION", "\"demo-en-EU\"")
+        buildConfigField("String", "AXEPTIO_TARGET_SERVICE", "\"brands\"")
+    }
+}
+```
+In Build Variants, select either `brands` or `publishers` depending on the service you want to test.
+
+### GitHub Authentication for Maven
+In `settings.gradle.kts`, add your GitHub username and a personal access token:
+```kotlin
+maven {
+    url = uri("https://maven.pkg.github.com/axeptio/tcf-android-sdk")
+    credentials {
+        username = "USER" // TODO: GITHUB USERNAME
+        password = "TOKEN" // TODO: GITHUB TOKEN
+    }
+}
+```
 
 > 🛠️ **Tip:** Make sure you're using the correct environment configuration (staging or production) when setting the `client_id` and `cookies_version`.
 
